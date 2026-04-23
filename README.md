@@ -1,5 +1,7 @@
 # RetailVelocity
 
+![screen-1](screen-1.png)
+
 > High-performance e-commerce sales analytics & forecasting — powered by **Polars** and **Streamlit**.
 
 RetailVelocity turns raw transaction logs into a decision-ready dashboard: daily
@@ -10,31 +12,31 @@ rows without blinking.
 
 ## Headline numbers (1,000,860 rows, M2 laptop)
 
-| Benchmark             | Mode  | Seconds | Rows/sec       |
-| --------------------- | ----- | ------- | -------------- |
+| Benchmark                | Mode  | Seconds   | Rows/sec   |
+| ------------------------ | ----- | --------- | ---------- |
 | Category group-by + join | lazy  | **0.019** | **53.2 M** |
-| Category group-by + join | eager | 0.023   | 44.4 M         |
-| Full RFM scoring      | eager | **0.011** | **95.2 M** |
-| Full RFM scoring      | lazy  | 0.018   | 56.2 M         |
+| Category group-by + join | eager | 0.023     | 44.4 M     |
+| Full RFM scoring         | eager | **0.011** | **95.2 M** |
+| Full RFM scoring         | lazy  | 0.018     | 56.2 M     |
 
 > The full 3-year / 1M-row synthetic dataset segments every customer and scores
 > RFM tiers in **under 20 ms**. Regenerate with `uv run retailvelocity benchmark`.
 
 ## What's inside
 
-| Layer           | File / Path                                | Purpose                                              |
-| --------------- | ------------------------------------------ | ---------------------------------------------------- |
-| Data generator  | `src/retailvelocity/data_gen.py`           | Realistic 1M+ row synthetic data with seasonality    |
-| Ingestion       | `src/retailvelocity/ingestion.py`          | Lazy parquet scan + join + calendar enrichment       |
-| Descriptive     | `src/retailvelocity/descriptive.py`        | Time-series aggregates, heatmap, category splits     |
-| Diagnostic (RFM) | `src/retailvelocity/rfm.py`               | Recency / Frequency / Monetary → tier labels         |
-| Cohort          | `src/retailvelocity/cohort.py`             | Monthly acquisition cohort retention matrix          |
-| Predictive      | `src/retailvelocity/forecasting.py`        | Per-SKU Holt-Winters forecast with CI bands + MAPE   |
-| Prescriptive    | `src/retailvelocity/prescriptive.py`       | Reorder points, dead stock, at-risk revenue          |
-| Benchmarks      | `src/retailvelocity/benchmarks.py`         | Polars eager vs lazy throughput                      |
-| Streamlit app   | `app/Home.py` + `app/pages/*`              | Multi-page dashboard — trends, RFM, cohort, forecast |
-| Tests           | `tests/`                                   | 27 pytest cases, 1.6 s run time                      |
-| CLI             | `retailvelocity {generate,summary,benchmark}` | One-command workflow                              |
+| Layer            | File / Path                                   | Purpose                                              |
+| ---------------- | --------------------------------------------- | ---------------------------------------------------- |
+| Data generator   | `src/retailvelocity/data_gen.py`              | Realistic 1M+ row synthetic data with seasonality    |
+| Ingestion        | `src/retailvelocity/ingestion.py`             | Lazy parquet scan + join + calendar enrichment       |
+| Descriptive      | `src/retailvelocity/descriptive.py`           | Time-series aggregates, heatmap, category splits     |
+| Diagnostic (RFM) | `src/retailvelocity/rfm.py`                   | Recency / Frequency / Monetary → tier labels         |
+| Cohort           | `src/retailvelocity/cohort.py`                | Monthly acquisition cohort retention matrix          |
+| Predictive       | `src/retailvelocity/forecasting.py`           | Per-SKU Holt-Winters forecast with CI bands + MAPE   |
+| Prescriptive     | `src/retailvelocity/prescriptive.py`          | Reorder points, dead stock, at-risk revenue          |
+| Benchmarks       | `src/retailvelocity/benchmarks.py`            | Polars eager vs lazy throughput                      |
+| Streamlit app    | `app/Home.py` + `app/pages/*`                 | Multi-page dashboard — trends, RFM, cohort, forecast |
+| Tests            | `tests/`                                      | 27 pytest cases, 1.6 s run time                      |
+| CLI              | `retailvelocity {generate,summary,benchmark}` | One-command workflow                                 |
 
 ## Architecture
 
