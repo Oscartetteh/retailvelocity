@@ -1,0 +1,79 @@
+[project]
+name = "retailvelocity"
+version = "0.1.0"
+description = "High-performance e-commerce sales analytics & forecasting with Polars and Streamlit"
+readme = "README.md"
+authors = [
+    { name = "Oscartetteh", email = "bismarktetteh25@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "polars>=1.20.0",
+    "pyarrow>=18.0.0",
+    "numpy>=2.0.0",
+    "scikit-learn>=1.5.0",
+    "statsmodels>=0.14.4",
+    "streamlit>=1.40.0",
+    "plotly>=5.24.0",
+    "altair>=5.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.8.0",
+    "mypy>=1.13.0",
+    "ipykernel>=6.29.0",
+    "jupyter>=1.1.0",
+]
+
+[project.scripts]
+retailvelocity = "retailvelocity.cli:main"
+rv-generate = "retailvelocity.data_gen:cli"
+
+[build-system]
+requires = ["uv_build>=0.9.7,<0.10.0"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "UP",   # pyupgrade
+    "N",    # pep8-naming
+    "SIM",  # flake8-simplify
+    "RUF",  # ruff-specific
+]
+ignore = [
+    "E501",  # line-too-long (handled by formatter)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["N802", "N803"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--cov=retailvelocity",
+    "--cov-report=term-missing",
+]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+ignore_missing_imports = true
+
+[tool.coverage.run]
+branch = true
+source = ["src/retailvelocity"]
